@@ -1,99 +1,132 @@
-#include <iostream>
+#include<iostream>
 
 using namespace std;
 
-// DFA Function
-int checkString(char str[])
+
+
+int validateInput(char text[])
 {
-    int state = 0;
-    int i = 0;
+    int current = 0;
 
-    while(str[i] != '\0')
+    int position = 0;
+
+
+    while(text[position] != '\0')
     {
-        char ch = str[i];
+        char value = text[position];
 
-        // q0
-        if(state == 0)
+
+
+
+        if(current == 0)
         {
-            if(ch == 'a')
-                state = 1;
-            else
-                return 0;
-        }
-
-        // q1
-        else if(state == 1)
-        {
-            if(ch == 'b')
-                state = 2;
-
-            else if(ch == 'a')
-                state = 1;
+            if(value == 'a')
+            {
+                current = 1;
+            }
 
             else
+            {
                 return 0;
+            }
         }
 
-        // q2
-        else if(state == 2)
-        {
-            if(ch == 'b')
-                state = 2;
 
-            else if(ch == 'a')
-                state = 1;
+
+
+        else if(current == 1)
+        {
+            if(value == 'a')
+            {
+                current = 1;
+            }
+
+            else if(value == 'b')
+            {
+                current = 2;
+            }
 
             else
+            {
                 return 0;
+            }
         }
 
-        i++;
+
+
+
+        else if(current == 2)
+        {
+            if(value == 'b')
+            {
+                current = 2;
+            }
+
+            else if(value == 'a')
+            {
+                current = 1;
+            }
+
+            else
+            {
+                return 0;
+            }
+        }
+
+
+        position++;
     }
 
-    // Final States
-    if(state == 1 || state == 2)
+
+
+    if(current == 1 || current == 2)
+    {
         return 1;
+    }
 
     return 0;
 }
 
+
+
+
+
+void printAnswer(char sample[])
+{
+    cout << sample << " -> ";
+
+
+    if(validateInput(sample))
+    {
+        cout << "Accepted";
+    }
+
+    else
+    {
+        cout << "Rejected";
+    }
+
+    cout << endl;
+}
+
+
+
+
 int main()
 {
-    char test1[] = "a";
-    char test2[] = "ab";
-    char test3[] = "abb";
-    char test4[] = "aaabbb";
-    char test5[] = "ba";
+    char input1[] = "a";
+    char input2[] = "ab";
+    char input3[] = "abb";
+    char input4[] = "aaabbb";
+    char input5[] = "ba";
 
-    cout << test1 << " -> ";
-    if(checkString(test1))
-        cout << "Accepted\n";
-    else
-        cout << "Rejected\n";
 
-    cout << test2 << " -> ";
-    if(checkString(test2))
-        cout << "Accepted\n";
-    else
-        cout << "Rejected\n";
+    printAnswer(input1);
+    printAnswer(input2);
+    printAnswer(input3);
+    printAnswer(input4);
+    printAnswer(input5);
 
-    cout << test3 << " -> ";
-    if(checkString(test3))
-        cout << "Accepted\n";
-    else
-        cout << "Rejected\n";
-
-    cout << test4 << " -> ";
-    if(checkString(test4))
-        cout << "Accepted\n";
-    else
-        cout << "Rejected\n";
-
-    cout << test5 << " -> ";
-    if(checkString(test5))
-        cout << "Accepted\n";
-    else
-        cout << "Rejected\n";
 
     return 0;
 }
